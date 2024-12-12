@@ -4,13 +4,13 @@
 
 import 'dart:convert';
 
-List<AllCountries> allCountriesFromJson(String str) => List<AllCountries>.from(
-    json.decode(str).map((x) => AllCountries.fromJson(x)));
+List<CountryModel> allCountriesFromJson(String str) => List<CountryModel>.from(
+    json.decode(str).map((x) => CountryModel.fromJson(x)));
 
-String allCountriesToJson(List<AllCountries> data) =>
+String allCountriesToJson(List<CountryModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class AllCountries {
+class CountryModel {
   Name name;
   List<String>? tld;
   String cca2;
@@ -47,7 +47,7 @@ class AllCountries {
   Gini? gini;
   PostalCode? postalCode;
 
-  AllCountries({
+  CountryModel({
     required this.name,
     this.tld,
     required this.cca2,
@@ -85,7 +85,7 @@ class AllCountries {
     this.postalCode,
   });
 
-  factory AllCountries.fromJson(Map<String, dynamic> json) => AllCountries(
+  factory CountryModel.fromJson(Map<String, dynamic> json) => CountryModel(
         name: Name.fromJson(json["name"]),
         tld: json["tld"] == null
             ? []

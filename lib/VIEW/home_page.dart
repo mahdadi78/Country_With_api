@@ -1,4 +1,6 @@
+import 'package:basketball_court/CONTROLLER/controller.dart';
 import 'package:flutter/gestures.dart';
+import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +11,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var controller = Get.put(AllCountryController());
     PageController pageController = PageController(
       initialPage: 2,
     );
@@ -49,7 +52,10 @@ class HomePage extends StatelessWidget {
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
                                   color: Colors.white),
-                              child: Text('Grid Item $index'),
+                              child: Obx(() => controller.isLoading.value
+                                  ? const Icon(Icons.network_check)
+                                  : Text(controller
+                                      .countryList[index].startOfWeek)),
                             );
                           },
                           childCount: 6,
