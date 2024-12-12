@@ -43,21 +43,33 @@ class HomePage extends StatelessWidget {
                           maxCrossAxisExtent: 150.0,
                           mainAxisSpacing: 10.0,
                           crossAxisSpacing: 10.0,
-                          childAspectRatio: 1,
+                          childAspectRatio: 4.5 / 3,
                         ),
                         delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                            return Container(
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.white),
-                              child: Obx(() => controller.isLoading.value
-                                  ? const Icon(Icons.network_check)
-                                  : Text(controller
-                                      .countryList[index].startOfWeek)),
-                            );
-                          },
+                          (BuildContext context, int index) => index > 4
+                              ? const CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  child: Icon(Icons.more_horiz))
+                              : Container(
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: Colors.white),
+                                  child: Obx(() => controller.isLoading.value
+                                      ? const Icon(Icons.network_check)
+                                      : SizedBox.expand(
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            child: Image(
+                                                fit: BoxFit.fill,
+                                                image: NetworkImage(controller
+                                                    .countryList[index]
+                                                    .flags
+                                                    .png)),
+                                          ),
+                                        )),
+                                ),
                           childCount: 6,
                         ),
                       ),
