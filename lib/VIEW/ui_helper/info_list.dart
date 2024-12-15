@@ -15,8 +15,12 @@ class InfoList extends StatelessWidget {
     return SliverList.separated(
         itemCount: 10,
         itemBuilder: (context, index) {
-          return Obx(() => controller.isLoading.value
-              ? const CircularProgressIndicator()
+          return Obx(() => controller.isLoading_country.value
+              ? const SizedBox(
+                  width: 10,
+                  height: 10,
+                  child: LinearProgressIndicator(),
+                )
               : ListTile(
                   title: Column(
                     mainAxisAlignment: MainAxisAlignment.start,

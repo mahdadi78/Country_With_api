@@ -32,6 +32,46 @@ class HomePage extends StatelessWidget {
                   child: CustomScrollView(
                     slivers: [
                       SliverAppBarBANNER(pageController: pageController),
+                      SliverFixedExtentList.builder(
+                        addAutomaticKeepAlives: false,
+                        addSemanticIndexes: true,
+                        itemBuilder: (context, index) {
+                          return Obx(
+                            () => controller.isLoading_user.value
+                                ? const SizedBox(
+                                    width: double.infinity,
+                                    height: 5,
+                                    child: LinearProgressIndicator(
+                                      semanticsLabel: 'loading...',
+                                      color: Colors.grey,
+                                    ),
+                                  )
+                                : ListTile(
+                                    style: ListTileStyle.list,
+                                    trailing: Text(
+                                      controller.userList[index].website,
+                                      style: const TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    leading: Text(
+                                      controller.userList[index].username,
+                                      style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w800),
+                                    ),
+                                    title: Text(
+                                      controller.userList[index].name,
+                                      style: const TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w300),
+                                    ),
+                                  ),
+                          );
+                        },
+                        itemExtent: 50,
+                        itemCount: 5,
+                      ),
                       SliverAppBar(
                         backgroundColor: Colors.transparent,
                         title: Text(
@@ -72,11 +112,11 @@ class HomePage extends StatelessWidget {
                               fontSize: 15, fontWeight: FontWeight.w800),
                         ),
                       ),
-                      InfoList(controller: controller)
+                      InfoList(controller: controller),
                     ],
                   ),
                 ),
-                appBar(context),
+                appBar(context, controller),
               ],
             ),
           ),
@@ -90,7 +130,7 @@ class HomePage extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20), color: Colors.white),
-      child: Obx(() => controller.isLoading.value
+      child: Obx(() => controller.isLoading_country.value
           ? const SizedBox(
               width: 50,
               height: 50,
@@ -108,7 +148,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget appBar(BuildContext context) {
+  Widget appBar(BuildContext context, controller) {
     return Container(
       margin: const EdgeInsets.only(top: 20),
       padding: const EdgeInsets.symmetric(horizontal: 8),
